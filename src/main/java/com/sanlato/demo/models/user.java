@@ -1,5 +1,8 @@
 package com.sanlato.demo.models;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonProperty.Access;
 
@@ -8,6 +11,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
@@ -17,6 +21,7 @@ import jakarta.validation.constraints.Size;
 @Table(name = user.TABLE_NAME)
 
 public class user {
+
     public interface CreateUser {}
     public interface UpdateUser {}
 
@@ -40,8 +45,20 @@ public class user {
     @Size (groups = {CreateUser.class, UpdateUser.class}, min = 8, max = 60)
     private String password;
 
+@OneToMany (mappedBy="user")
+   private List <Task> tasks =  new ArrayList<Task>();
 
-   // private List <Task> tasks =  new ArrayList<Task>();
+   
+   public List<Task> getTasks() {
+    return tasks;
+}
+
+/**
+ * @param tasks
+ */
+public void setTasks(List<Task> tasks) {
+    this.tasks = tasks;
+}
 
    public user (){
   }
@@ -101,12 +118,12 @@ public boolean equals(Object obj) {
     } else if (!id.equals(other.id))
         return false;
     if (username == null) {
-        if (other.username != null)
+       // if (other.username != null)
             return false;
     } else if (!username.equals(other.username))
         return false;
     if (password == null) {
-        if (other.password != null)
+       // if (other.password != null)
             return false;
     } else if (!password.equals(other.password))
         return false;
