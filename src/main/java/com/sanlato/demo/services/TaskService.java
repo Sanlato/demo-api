@@ -1,5 +1,6 @@
 package com.sanlato.demo.services;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,6 +27,12 @@ public Task findById(long id){
         "Tarefa nao encontrada! id:" + id + ", Tipo: " + Task.class.getName()));
    
 }
+
+public List<Task> findAllByUserId(Long userid){
+    List<Task> tasks = this.taskRepository.findByUser_Id(userid);
+    return tasks;
+} 
+
 
 @Transactional
 public Task create (Task obj){
