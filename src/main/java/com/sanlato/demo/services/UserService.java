@@ -8,6 +8,8 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.sanlato.demo.models.user;
 import com.sanlato.demo.repositories.UserRepository;
+import com.sanlato.demo.services.exceptions.DataBindingViolationException;
+import com.sanlato.demo.services.exceptions.ObjectNotFoundException;
 
 
 
@@ -22,7 +24,7 @@ public class UserService {
 
  public user findById(Long id) {
     Optional<user> user =this.userRepository.findById(id);
-    return user.orElseThrow(() -> new RuntimeException("usuario nao encontrado! id " + id + ", Tipo" + user.class.getName() ));
+    return user.orElseThrow(() -> new ObjectNotFoundException ("usuario nao encontrado! id " + id + ", Tipo" + user.class.getName() ));
 }
 
  
@@ -47,7 +49,7 @@ return  this.userRepository.save(newObj);
     try{
         this.userRepository.deleteById(id);
     } catch(Exception e){
-        throw new RuntimeException("Nao e possivel excluir pois ha entidades relacionadas");
+        throw new DataBindingViolationException("Nao e possivel excluir pois ha entidades relacionadas");
     }
  }
 }
