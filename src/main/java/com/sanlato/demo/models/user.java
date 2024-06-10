@@ -16,8 +16,18 @@ import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
+import lombok.AllArgsConstructor;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 @Entity
+@AllArgsConstructor
+@NoArgsConstructor
+@Getter
+@Setter
+@EqualsAndHashCode
 @Table(name = user.TABLE_NAME)
 
 public class user {
@@ -46,90 +56,9 @@ public class user {
     private String password;
 
 @OneToMany (mappedBy="user")
+@JsonProperty(access = Access.WRITE_ONLY)
    private List <Task> tasks =  new ArrayList<Task>();
 
-   
-   public List<Task> getTasks() {
-    return tasks;
-}
-
-/**
- * @param tasks
- */
-public void setTasks(List<Task> tasks) {
-    this.tasks = tasks;
-}
-
-   public user (){
-  }
-
-public user(Long id, String password, String username) {
-    this.id = id;
-    this.password = password;
-    this.username = username;
-}
-
-public Long getId() {
-    return id;
-}
-
-public void setId(Long id) {
-    this.id = id;
-}
-
-public String getUsername() {
-    return username;
-}
-
-public void setUsername(String username) {
-    this.username = username;
-}
-
-public String getPassword() {
-    return password;
-}
-
-public void setPassword(String password) {
-    this.password = password;
-}
-
-@Override
-public int hashCode() {
-    final int prime = 31;
-    int result = 1;
-    result = prime * result + ((id == null) ? 0 : id.hashCode());
-    result = prime * result + ((username == null) ? 0 : username.hashCode());
-    result = prime * result + ((password == null) ? 0 : password.hashCode());
-    return result;
-}
-
-@Override
-public boolean equals(Object obj) {
-    if (this == obj)
-        return true;
-    if (obj == null)
-        return false;
-    if (getClass() != obj.getClass())
-        return false;
-    user other = (user) obj;
-    if (id == null) {
-        if (other.id != null)
-            return false;
-    } else if (!id.equals(other.id))
-        return false;
-    if (username == null) {
-       // if (other.username != null)
-            return false;
-    } else if (!username.equals(other.username))
-        return false;
-    if (password == null) {
-       // if (other.password != null)
-            return false;
-    } else if (!password.equals(other.password))
-        return false;
-    return true;
-}
-
-
+  
 
 }
